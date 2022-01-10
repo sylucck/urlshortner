@@ -1,7 +1,29 @@
 from django.db import models
 from .utils import create_shortened_url
 
+#Importing the user model 
+from django.contrib.auth.models import User
 # Create your models here.
+
+# Profile model
+class ProfileModel(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    last_name = models.CharField(max_length=30, blank=True, null=True)
+    age = models.FloatField(default='', null=True, blank=True)
+    address = models.CharField(max_length=60, null=True, blank=True)
+    image =  models.ImageField(default='default.jpg', upload_to="profile_pics")
+    bio = models.CharField(max_length=100, null=True, blank=True, help_text="Bio must be 100 characters long")
+
+    class Meta:
+        ordering = ['last_name']
+
+
+    def __str__(self):
+        """String for representing the Model Object."""
+        return f'{self.last_name}, {self.first_name}'
+
+
 
 
 class ShortenerModel(models.Model):

@@ -1,12 +1,41 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+
 
 # Custom form
-from .forms import ShortenerForm
+from .forms import ShortenerForm, UserRegistrationForm
 
 
 # Create your views here.
+def dashboard(request):
+    return render(request, "shortner/dashboard.html")
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            user = form.save()
+            user.save()
+
+            #sending a success message
+            messages.success(request, f'Hello {username}, your account has been created! You are able to log in')
+            login(request, user)
+            return redirect('login')
+
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'shortner/register.html', {'form':form})
+
+
+
+
+
+@login_required
 def index(request):
     template = 'shortner/index.html'
 

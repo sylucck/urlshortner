@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Hello, {{ user.username|default:'Guest' }}!</h1>
+
+<h2>Welcome</h2>
+
+<div class="border-top pt-3">
+    <small class="text-muted">
+        <a href="{% url 'index' %}"> Go To Url-shortener Page</a>
+    </small>
+</div>
+
+
+
+{% endblock body %}
