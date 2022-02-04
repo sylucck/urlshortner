@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shortner',
     'crispy_forms',
+    'richtext'
 ]
 
 MIDDLEWARE = [
